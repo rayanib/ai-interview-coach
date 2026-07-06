@@ -1,0 +1,23 @@
+# Dependency folders are recreated by npm install.
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment files contain private keys and local settings.
+.env
+.env.*
+!.env.example
+client/.env
+server/.env
+
+# Generated frontend files.
+client/dist/
+
+# Logs and operating system files.
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor settings.
+.vscode/
+.idea/
