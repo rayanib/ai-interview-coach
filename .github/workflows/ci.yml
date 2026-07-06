@@ -1,0 +1,46 @@
+name: Build checks
+
+# Run these checks whenever code is pushed or a pull request is opened.
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the repository into the temporary GitHub Actions runner.
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Use the same modern Node.js version expected by the project.
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+            server/package-lock.json
+
+      # Install exact dependency versions from each package lock file.
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install frontend dependencies
+        run: npm ci --prefix client
+
+      - name: Install backend dependencies
+        run: npm ci --prefix server
+
+      # A production build catches broken imports and React compilation errors.
+      - name: Build frontend
+        run: npm run build --prefix client
+
+      # The backend check verifies the entry file has valid JavaScript syntax.
+      - name: Check backend syntax
+        run: npm run check --prefix server
