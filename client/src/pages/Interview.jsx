@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../api.js";
 import FeedbackCard from "../components/FeedbackCard.jsx";

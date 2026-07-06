@@ -1,3 +1,5 @@
+import React from "react";
+
 // This component shows the interview feedback returned by the backend.
 export default function FeedbackCard({ feedback }) {
   if (!feedback) return null;
